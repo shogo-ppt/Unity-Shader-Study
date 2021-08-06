@@ -21,6 +21,7 @@
         // Surface Shader:シェーダー本体
         sampler2D _MainTex;
 
+        // ★重要
         struct Input {
             float2 uv_MainTex;
         };
@@ -36,6 +37,8 @@
             // put more per-instance properties here
         UNITY_INSTANCING_BUFFER_END(Props)
 
+        // ★重要 <- Surface Shaderの肝
+        // 出力用の構造体(SurfaceOutputStandard)がもつ(oのこと?)Albedo変数に色情報を指定
         void surf (Input IN, inout SurfaceOutputStandard o) {
             // Albedo comes from a texture tinted by color
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
