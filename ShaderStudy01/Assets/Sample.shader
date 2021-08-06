@@ -1,10 +1,12 @@
 ﻿Shader "Custom/Sample" {
     // Parametares:変数
     Properties {
-        _Color ("Color", Color) = (1,1,1,1)
-        _MainTex ("Albedo (RGB)", 2D) = "white" {}
-        _Glossiness ("Smoothness", Range(0,1)) = 0.5
-        _Metallic ("Metallic", Range(0,1)) = 0.0
+        // インスペクタから操作できるようにする
+        // _BaseColor:公開する変数名
+        // "Base Color":インスペクタ上の表示
+        // Color:型名
+        // (1, 1, 1, 1):初期値
+        _BaseColor ("Base Color", Color) = (1, 1, 1, 1)
     }
     SubShader {
         // Shader Settings:ライティングや透明度の設定
@@ -26,9 +28,7 @@
             float2 uv_MainTex;
         };
 
-        half _Glossiness;
-        half _Metallic;
-        fixed4 _Color;
+        fixed4 _BaseColor;
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -41,12 +41,7 @@
         // 出力用の構造体(SurfaceOutputStandard)がもつ(oのこと?)Albedo変数に色情報を指定
         void surf (Input IN, inout SurfaceOutputStandard o) {
             // Albedo comes from a texture tinted by color
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            o.Albedo = fixed4(0.1f, 0.1f, 0.1f, 1);
-            // Metallic and smoothness come from slider variables
-            o.Metallic = _Metallic;
-            o.Smoothness = _Glossiness;
-            o.Alpha = c.a;
+            o.Albedo = _BaseColor.rgb;
         }
         ENDCG
     }
