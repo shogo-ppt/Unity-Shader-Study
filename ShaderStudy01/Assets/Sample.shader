@@ -1,4 +1,5 @@
 ﻿Shader "Custom/Sample" {
+    // Parametares:変数
     Properties {
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
@@ -6,6 +7,7 @@
         _Metallic ("Metallic", Range(0,1)) = 0.0
     }
     SubShader {
+        // Shader Settings:ライティングや透明度の設定
         Tags { "RenderType"="Opaque" }
         LOD 200
 
@@ -16,6 +18,7 @@
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
 
+        // Surface Shader:シェーダー本体
         sampler2D _MainTex;
 
         struct Input {
@@ -36,7 +39,7 @@
         void surf (Input IN, inout SurfaceOutputStandard o) {
             // Albedo comes from a texture tinted by color
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            o.Albedo = c.rgb;
+            o.Albedo = fixed4(0.1f, 0.1f, 0.1f, 1);
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
