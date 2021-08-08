@@ -10,12 +10,12 @@
     }
     SubShader {
         // Shader Settings:ライティングや透明度の設定
-        Tags { "RenderType"="Opaque" }
+        Tags { "Queue"="Transparent" }
         LOD 200
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows
+        #pragma surface surf Standard alpha:fade
 
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
@@ -41,7 +41,8 @@
         // 出力用の構造体(SurfaceOutputStandard)がもつ(oのこと?)Albedo変数に色情報を指定
         void surf (Input IN, inout SurfaceOutputStandard o) {
             // Albedo comes from a texture tinted by color
-            o.Albedo = _BaseColor.rgb;
+            o.Albedo = fixed4(0.6f, 0.7f, 0.4f, 1);
+            o.Alpha = 0.6;
         }
         ENDCG
     }
