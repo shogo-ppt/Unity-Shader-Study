@@ -7,6 +7,7 @@
         // "Base Color":インスペクタ上の表示
         // Color:型名
         // (1, 1, 1, 1):初期値
+        _Alpha ("Alpha", Range(0, 100)) = 1.5
     }
     SubShader {
         // Shader Settings:ライティングや透明度の設定
@@ -29,6 +30,7 @@
             float3 viewDir;     // 視線ベクトル
         };
 
+        half _Alpha;
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -43,7 +45,7 @@
             // Albedo comes from a texture tinted by color
             o.Albedo = fixed4(1, 1, 1, 1);
             float alpha = 1 - (abs(dot(IN.viewDir, IN.worldNormal)));
-            o.Alpha = alpha * 1.5f;
+            o.Alpha = alpha * _Alpha;
         }
         ENDCG
     }
