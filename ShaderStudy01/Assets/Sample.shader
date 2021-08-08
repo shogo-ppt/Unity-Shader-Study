@@ -2,11 +2,11 @@
     // Parametares:変数
     Properties {
         // インスペクタから操作できるようにする
+        // _BaseColor ("Base Color", Color) = (1, 1, 1, 1)
         // _BaseColor:公開する変数名
         // "Base Color":インスペクタ上の表示
         // Color:型名
         // (1, 1, 1, 1):初期値
-        _BaseColor ("Base Color", Color) = (1, 1, 1, 1)
     }
     SubShader {
         // Shader Settings:ライティングや透明度の設定
@@ -25,10 +25,10 @@
 
         // ★重要
         struct Input {
-            float2 uv_MainTex;
+            float3 worldNormal; // オブジェクトの法線ベクトル
+            float3 viewDir;     // 視線ベクトル
         };
 
-        fixed4 _BaseColor;
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -41,8 +41,9 @@
         // 出力用の構造体(SurfaceOutputStandard)がもつ(oのこと?)Albedo変数に色情報を指定
         void surf (Input IN, inout SurfaceOutputStandard o) {
             // Albedo comes from a texture tinted by color
-            o.Albedo = fixed4(0.6f, 0.7f, 0.4f, 1);
-            o.Alpha = 0.6;
+            o.Albedo = fixed4(1, 1, 1, 1);
+            float alpha = 1 - (abs(dot(IN.viewDir, IN.worldNormal)));
+            o.Alpha = alpha * 1.5f;
         }
         ENDCG
     }
