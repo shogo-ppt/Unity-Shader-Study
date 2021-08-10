@@ -5,6 +5,7 @@
     SubShader {
         Tags { "RenderType"="Opaque" }
         LOD 200
+        Cull off
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
