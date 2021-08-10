@@ -5,7 +5,7 @@
     SubShader {
         Tags { "RenderType"="Opaque" }
         LOD 200
-        Cull off
+        Cull off // テクスチャの両面表示をする記述
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
