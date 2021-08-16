@@ -37,7 +37,7 @@
             fixed4 c;
             c.rgb = s.Albedo * _LightColor0.rgb * ramp;
             c.a = 0;
-            return 0;
+            return c;
         }
         
         void surf (Input IN, inout SurfaceOutput o) {
